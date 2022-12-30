@@ -10,7 +10,7 @@ use mpl_token_metadata::{
     ID as MetadataTokenId,
 };
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("EFe4sykZs9eBzrGdxhNDLAGPTk4cqfza77i66HvPPnpc");
 
 #[program]
 pub mod solana_nft_staking {
@@ -30,7 +30,34 @@ pub mod solana_nft_staking {
 }
 
 #[derive(Accounts)]
-pub struct Stake {}
+pub struct Stake<'info> {
+    #[account(mut)]
+    pub user: Signer<'info>,
+    #[account(
+        mut,
+        associated_token::mint=nft_mint,
+        associated_token::authority=user
+    )]
+    pub nft_token_account: Account<'info, TokenAccount>,
+    pub nft_mint: Account<'info, Mint>,
+    /// CHECK: Manual validation
+    #[account(owner=MetadataTokenId)]
+    pub nft_edition: UncheckedAccount<'info>,
+    #[account(
+        init_if_needed,
+        payer=user,
+        space = std::mem::size_of::<UserStakeInfo>() + 8,
+        seeds = [user.key().as_ref(), nft_token_account.key().as_ref()],
+        bump
+    )]
+    pub stake_state: Account<'info, UserStakeInfo>,
+    /// CHECK: Manual validation
+    #[account(mut, seeds=["authority".as_bytes().as_ref()], bump)]
+    pub program_authority: UncheckedAccount<'info>,
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+    pub metadata_program: Program<'info, Metadata>,
+}
 
 #[derive(Accounts)]
 pub struct Redeem {}
@@ -57,5 +84,14 @@ pub enum StakeState {
 impl Default for StakeState {
     fn default() -> Self {
         StakeState::Unstaked
+    }
+}
+
+#[derive(Clone)]
+pub struct Metadata;
+
+impl anchor_lang::Id for Metadata {
+    fn id() -> Pubkey {
+        MetadataTokenId
     }
 }
