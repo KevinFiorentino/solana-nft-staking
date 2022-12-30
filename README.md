@@ -1,5 +1,8 @@
 # Solana NFT Staking
 
-### Test
+### Test Devnet
 
-- `anchor test --provider.cluster localnet`
+- `nvm use 16`
+- `npm i -g yarn`
+- `npm i -g ts-node`
+- `anchor test`

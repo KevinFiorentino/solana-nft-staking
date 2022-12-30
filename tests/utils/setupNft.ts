@@ -3,6 +3,7 @@ import { createMint, getAssociatedTokenAddress } from "@solana/spl-token"
 import * as anchor from "@project-serum/anchor"
 
 export const setupNft = async (program, payer) => {
+
   const metaplex = Metaplex.make(program.provider.connection)
     .use(keypairIdentity(payer))
     .use(bundlrStorage())
@@ -11,16 +12,21 @@ export const setupNft = async (program, payer) => {
     .nfts()
     .create({
       uri: "",
-      name: "Test nft",
+      name: "Test NFT",
+      symbol: "KEV",
       sellerFeeBasisPoints: 0,
     })
 
+  console.log('nft', nft)
+
   console.log("nft metadata pubkey: ", nft.metadataAddress.toBase58())
   console.log("nft token address: ", nft.tokenAddress.toBase58())
+
   const [delegatedAuthPda] = await anchor.web3.PublicKey.findProgramAddress(
     [Buffer.from("authority")],
     program.programId
   )
+
   const [stakeStatePda] = await anchor.web3.PublicKey.findProgramAddress(
     [payer.publicKey.toBuffer(), nft.tokenAddress.toBuffer()],
     program.programId
@@ -28,6 +34,7 @@ export const setupNft = async (program, payer) => {
 
   console.log("delegated authority pda: ", delegatedAuthPda.toBase58())
   console.log("stake state pda: ", stakeStatePda.toBase58())
+
   const [mintAuth] = await anchor.web3.PublicKey.findProgramAddress(
     [Buffer.from("mint")],
     program.programId
@@ -40,6 +47,7 @@ export const setupNft = async (program, payer) => {
     null,
     2
   )
+
   console.log("Mint pubkey: ", mint.toBase58())
 
   const tokenAddress = await getAssociatedTokenAddress(mint, payer.publicKey)

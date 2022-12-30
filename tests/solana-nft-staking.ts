@@ -3,6 +3,7 @@ import { Program } from "@project-serum/anchor";
 import { SolanaNftStaking } from "../target/types/solana_nft_staking";
 import { PROGRAM_ID as METADATA_PROGRAM_ID } from "@metaplex-foundation/mpl-token-metadata";
 import { setupNft } from './utils/setupNft';
+import { expect } from "chai";
 
 describe("Solana NFT Staking", () => {
 
@@ -35,6 +36,9 @@ describe("Solana NFT Staking", () => {
         metadataProgram: METADATA_PROGRAM_ID,
       })
       .rpc()
+
+    const account = await program.account.userStakeInfo.fetch(stakeStatePda)
+    expect(account.stakeState === "Staked")
   })
 
 });
