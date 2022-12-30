@@ -1,6 +1,7 @@
 [features]
-seeds = false
+seeds = true
 skip-lint = false
+
 [programs.localnet]
 solana_nft_staking = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
 
@@ -8,7 +9,7 @@ solana_nft_staking = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "/home/kevin/.config/solana/id.json"
 
 [scripts]
