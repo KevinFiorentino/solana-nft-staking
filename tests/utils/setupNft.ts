@@ -17,8 +17,6 @@ export const setupNft = async (program, payer) => {
       sellerFeeBasisPoints: 0,
     })
 
-  console.log('nft', nft)
-
   console.log("nft metadata pubkey: ", nft.metadataAddress.toBase58())
   console.log("nft token address: ", nft.tokenAddress.toBase58())
 
