@@ -3,6 +3,7 @@ import { Program } from "@project-serum/anchor";
 import { getAccount } from "@solana/spl-token"
 import { SolanaNftStaking } from "../target/types/solana_nft_staking";
 import { PROGRAM_ID as METADATA_PROGRAM_ID } from "@metaplex-foundation/mpl-token-metadata";
+import { CreateNftOutput } from '@metaplex-foundation/js';
 import { setupNft } from './utils/setupNft';
 import { expect } from "chai";
 
@@ -15,11 +16,11 @@ describe("Solana NFT Staking", () => {
 
   const wallet = anchor.workspace.SolanaNftStaking.provider.wallet
 
+  let nft: CreateNftOutput
   let delegatedAuthPda: anchor.web3.PublicKey
   let stakeStatePda: anchor.web3.PublicKey
-  let nft: any
-  let mintAuth: anchor.web3.PublicKey
   let mint: anchor.web3.PublicKey
+  let mintAuth: anchor.web3.PublicKey
   let tokenAddress: anchor.web3.PublicKey
 
   before(async () => {
@@ -27,7 +28,7 @@ describe("Solana NFT Staking", () => {
       await setupNft(program, wallet.payer))
   })
 
-  it("Stakes", async () => {
+  it("Stake NFT", async () => {
     await program.methods
       .stake()
       .accounts({
@@ -42,7 +43,7 @@ describe("Solana NFT Staking", () => {
     expect(account.stakeState === "Staked")
   })
 
-  it("Redeems", async () => {
+  it("Redeem Reward", async () => {
     await program.methods
       .redeem()
       .accounts({
@@ -57,7 +58,7 @@ describe("Solana NFT Staking", () => {
     const tokenAccount = await getAccount(provider.connection, tokenAddress)
   })
 
-  it("Unstakes", async () => {
+  it("Unstake NFT", async () => {
     await program.methods
       .unstake()
       .accounts({
