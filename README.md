@@ -1,8 +1,17 @@
 # Solana NFT Staking
 
-### Test Devnet
+Stake NFTs and win a token reward
 
-- `nvm use 16`
-- `npm i -g yarn`
-- `npm i -g ts-node`
-- `anchor test`
+[See dapp](https://github.com/KevinFiorentino/pink-floyd-nft-collection)
+
+### Deploy program
+
+- `anchor build`
+- `solana address -k target/deploy/solana_nft_staking-keypair.json`
+- Replace Program ID in `lib.rs` and `Anchor.toml`
+- `anchor build` (again)
+- `anchor deploy`
+
+### Test
+
+- `anchor test --skip-build --skip-deploy`
