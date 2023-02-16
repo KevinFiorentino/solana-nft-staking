@@ -4,6 +4,7 @@ skip-lint = false
 
 [programs.devnet]
 solana_nft_staking = "AZmjfaCUAj9bh1GQvoAUnp37RmRumRjSopP6QW7pGQuR"
+lootbox_program = "43d6ewRt1ZwqpF5VmUmMiqNEBVfXhbzwciUiBHzZfqKS"
 
 [registry]
 url = "https://api.apr.dev"
