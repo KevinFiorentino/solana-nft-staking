@@ -109,6 +109,7 @@ pub mod solana_nft_staking {
         )?;
 
         ctx.accounts.stake_state.last_stake_redeem = clock.unix_timestamp;
+        ctx.accounts.stake_state.total_earned += redeem_amount as u64;
         msg!(
             "Updated last stake redeem time: {:?}",
             ctx.accounts.stake_state.last_stake_redeem
@@ -190,6 +191,7 @@ pub mod solana_nft_staking {
         )?;
 
         ctx.accounts.stake_state.last_stake_redeem = clock.unix_timestamp;
+        ctx.accounts.stake_state.total_earned += redeem_amount as u64;
         msg!(
             "Updated last stake redeem time: {:?}",
             ctx.accounts.stake_state.last_stake_redeem
@@ -259,7 +261,7 @@ pub struct Redeem<'info> {
         associated_token::mint=stake_mint,
         associated_token::authority=user
     )]
-    pub user_stake_ata: Account<'info, TokenAccount>,
+    pub user_stake_ata: Box<Account<'info, TokenAccount>>,
     pub token_program: Program<'info, Token>,
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
@@ -301,7 +303,7 @@ pub struct Unstake<'info> {
         associated_token::mint=stake_mint,
         associated_token::authority=user
     )]
-    pub user_stake_ata: Account<'info, TokenAccount>,
+    pub user_stake_ata: Box<Account<'info, TokenAccount>>,
     pub token_program: Program<'info, Token>,
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
@@ -314,6 +316,7 @@ pub struct UserStakeInfo {
     pub token_account: Pubkey,
     pub stake_start_time: i64,
     pub last_stake_redeem: i64,
+    pub total_earned: u64,
     pub user_pubkey: Pubkey,
     pub stake_state: StakeState,
     pub is_initialized: bool,
