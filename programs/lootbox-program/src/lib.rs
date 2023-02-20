@@ -6,7 +6,7 @@ use anchor_spl::{
     token::{Burn, Mint, MintTo, Token, TokenAccount},
 };
 
-declare_id!("43d6ewRt1ZwqpF5VmUmMiqNEBVfXhbzwciUiBHzZfqKS");
+declare_id!("DR9bKxkN4A8AoCQfcBQ3Vz7mf8ireZ6JqWxSDfgmD72H");
 
 #[program]
 pub mod lootbox_program {
@@ -32,7 +32,7 @@ pub mod lootbox_program {
 
         require!(
             !ctx.accounts.lootbox_pointer.is_initialized || ctx.accounts.lootbox_pointer.claimed,
-            LootboxError::InvalidLootbox
+            LootboxError::InvalidLootboxID
         );
 
         token::burn(
@@ -48,15 +48,23 @@ pub mod lootbox_program {
         )?;
 
         let available_songs: Vec<Pubkey> = vec![
-            ""
-                .parse::<Pubkey>()
-                .unwrap(),
+            "DkzCeL18MWEj2DwCDh1ADvNsNWaQoGdN6RuUBuDfj5Lk".parse::<Pubkey>().unwrap(),
+            "9yA5jq74AndzMEwtb8MTwqSNEusr8UvpLdgibn6oWVMb".parse::<Pubkey>().unwrap(),
+            "Be93M2xcuufkQXARFA9MFFs6mGJM7kbTk8XYmjWTAxyQ".parse::<Pubkey>().unwrap(),
+            "BZmay9FYzjfZj72SCbzLd7iqqdQagPMpeJjJABijr3Zf".parse::<Pubkey>().unwrap(),
+            "EEL1tJ9hkiNgoPyqfJsLsdC8BecNKTS6gRcz8TpbNW63".parse::<Pubkey>().unwrap(),
+            "C12KwzsCM6nGsvDws2YaFNNZoJwNcF5RxCfiJmEksfBb".parse::<Pubkey>().unwrap(),
+            "9wsRTk1LpzjhfTUD4prb59JTkWpfv73izpBH8HhzxaaU".parse::<Pubkey>().unwrap(),
+            "HJn7NzygVQGndVS8UwA5vQqB6bLp6mfb3QZ2QprLKxCZ".parse::<Pubkey>().unwrap(),
+            "CEoVWiTDiyLbzHT1VYterF1gBCj7PmvXUJbNRGCDB9hP".parse::<Pubkey>().unwrap(),
+            "C3EHqNfoUe3wArMCN7ER5yL6vBqNrWRGrZQ6FgGeFAaK".parse::<Pubkey>().unwrap(),
         ];
 
         let clock = Clock::get()?;
-        let i: usize = (clock.unix_timestamp % 5).try_into().unwrap();
+        let i: usize = (clock.unix_timestamp % 10).try_into().unwrap();
         // Add in randomness later for selecting mint
         let mint = available_songs[i];
+
         ctx.accounts.lootbox_pointer.mint = mint;
         ctx.accounts.lootbox_pointer.claimed = false;
         ctx.accounts.lootbox_pointer.is_initialized = true;
@@ -75,7 +83,7 @@ pub mod lootbox_program {
                 ctx.accounts.token_program.to_account_info(),
                 MintTo {
                     mint: ctx.accounts.mint.to_account_info(),
-                    to: ctx.accounts.user_gear_ata.to_account_info(),
+                    to: ctx.accounts.user_song_ata.to_account_info(),
                     authority: ctx.accounts.mint_authority.to_account_info(),
                 },
                 &[&[
@@ -114,12 +122,8 @@ pub struct OpenLootbox<'info> {
     pub lootbox_pointer: Account<'info, LootboxPointer>,
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
-    // Swap the next two lines out between prod/testing
-    // #[account(mut)]
-    #[account(
-        mut,
-        address="6YR1nuLqkk8VC1v42xJaPKvE9X9pnuqVAvthFUSDsMUL".parse::<Pubkey>().unwrap()
-    )]
+    #[account(mut)]                                                                                         // TEST
+    // #[account(mut, address="6YR1nuLqkk8VC1v42xJaPKvE9X9pnuqVAvthFUSDsMUL".parse::<Pubkey>().unwrap())]   // PROD
     pub stake_mint: Account<'info, Mint>,
     #[account(
         mut,
@@ -156,7 +160,7 @@ pub struct RetrieveItem<'info> {
         associated_token::mint=mint,
         associated_token::authority=user
     )]
-    pub user_gear_ata: Account<'info, TokenAccount>,
+    pub user_song_ata: Account<'info, TokenAccount>,
     /// CHECK: Mint authority - not used as account
     #[account(
         seeds=["mint".as_bytes()],
@@ -174,6 +178,9 @@ enum LootboxError {
     #[msg("Mint already claimed")]
     AlreadyClaimed,
 
-    #[msg("Haven't staked long enough for this loot box or invalid loot box number")]
+    #[msg("Haven't staked long enough for this loot box")]
     InvalidLootbox,
+
+    #[msg("Invalid loot box number")]
+    InvalidLootboxID,
 }

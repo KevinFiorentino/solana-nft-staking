@@ -10,7 +10,7 @@ use mpl_token_metadata::{
     ID as MetadataTokenId,
 };
 
-declare_id!("AZmjfaCUAj9bh1GQvoAUnp37RmRumRjSopP6QW7pGQuR");
+declare_id!("AtJSvANyefwd1kCxjGngbHgyyt9K2AL9egpHifhbQh3u");
 
 #[program]
 pub mod solana_nft_staking {
@@ -88,7 +88,8 @@ pub mod solana_nft_staking {
         msg!("Current time: {:?}", clock.unix_timestamp);
         let unix_time = clock.unix_timestamp - ctx.accounts.stake_state.last_stake_redeem;
         msg!("Seconds since last redeem: {}", unix_time);
-        let redeem_amount = (10 * i64::pow(10, 2) * unix_time) / (24 * 60 * 60);
+        let redeem_amount = (10000000000 * i64::pow(10, 2) * unix_time) / (24 * 60 * 60);           // TEST
+        // let redeem_amount = (10 * i64::pow(10, 2) * unix_time) / (24 * 60 * 60);                    // PROD
         msg!("Elligible redeem amount: {}", redeem_amount);
 
         msg!("Minting staking rewards");
@@ -170,7 +171,8 @@ pub mod solana_nft_staking {
         msg!("Current time: {:?}", clock.unix_timestamp);
         let unix_time = clock.unix_timestamp - ctx.accounts.stake_state.last_stake_redeem;
         msg!("Seconds since last redeem: {}", unix_time);
-        let redeem_amount = (10 * i64::pow(10, 2) * unix_time) / (24 * 60 * 60);
+        let redeem_amount = (10000000000 * i64::pow(10, 2) * unix_time) / (24 * 60 * 60);           // TEST
+        // let redeem_amount = (10 * i64::pow(10, 2) * unix_time) / (24 * 60 * 60);                    // PROD
         msg!("Elligible redeem amount: {}", redeem_amount);
 
         msg!("Minting staking rewards");
