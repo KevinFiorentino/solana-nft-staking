@@ -1,8 +1,8 @@
-# Solana NFT Staking
+# Solana Programs - NFTs, Staking and Lootbox
 
 Stake NFTs and win a token reward
 
-[See front-end](https://github.com/KevinFiorentino/pink-floyd-nft-collection)
+[See front-end](https://github.com/KevinFiorentino/solana-staking-lootbox-ui)
 
 > Use at least NodeJS v16
 
@@ -11,7 +11,7 @@ Stake NFTs and win a token reward
 > In `staking-program` there are two lines to change depending Test or Production: Find the comment: `CHANGE DEPENDING TEST OR PRODUCTION` before deploy program
 
 1. Prepare to deploy both programs (Don't deploy them yet)
-2. Go to [front-end repo](https://github.com/KevinFiorentino/pink-floyd-nft-collection) and set both program IDs in `src/utils/constanst.ts`
+2. Go to [front-end repo](https://github.com/KevinFiorentino/solana-staking-lootbox-ui) and set both program IDs in `src/utils/constanst.ts`
 3. In that repo, follow `README.md` to generate reward token PINK and SONG tokens
 4. The third step generated several public key for each token, replace them on `lootbox-program`
 5. Deploy both programs
