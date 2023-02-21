@@ -19,8 +19,6 @@ describe('Solana NFT Staking && Lootbox', () => {
 
   const wallet = anchor.workspace.SolanaNftStaking.provider.wallet;
 
-  console.log('wallet', wallet.publicKey)
-
   let nft: CreateNftOutput
   let delegatedAuthPda: anchor.web3.PublicKey
   let stakeStatePda: anchor.web3.PublicKey
@@ -120,9 +118,6 @@ describe('Solana NFT Staking && Lootbox', () => {
       stakingProgram.programId
     );
 
-    console.log('stakeStatePda', stakeStatePda)
-    console.log('stakeAccount', stakeAccount)
-
     await lootboxProgram.methods
       .openLootbox(new BN(10))
       .accounts({
@@ -141,7 +136,7 @@ describe('Solana NFT Staking && Lootbox', () => {
     expect(pointer.mint.toBase58());
   })
 
-  /* it('Mints the selected song', async () => {
+  it('Mints the selected song', async () => {
 
     const [pointerAddress] = anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from('lootbox'), wallet.publicKey.toBuffer()],
@@ -167,6 +162,6 @@ describe('Solana NFT Staking && Lootbox', () => {
 
     const songAccount = await getAccount(provider.connection, songATA);
     expect(Number(songAccount.amount)).to.equal(1);
-  }) */
+  })
 
 });

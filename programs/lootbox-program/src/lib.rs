@@ -6,7 +6,7 @@ use anchor_spl::{
     token::{Burn, Mint, MintTo, Token, TokenAccount},
 };
 
-declare_id!("DR9bKxkN4A8AoCQfcBQ3Vz7mf8ireZ6JqWxSDfgmD72H");
+declare_id!("B8t7TWYR8y8vXheSXw1LQaynip1JiXBxwRoSJrTzvX7c");
 
 #[program]
 pub mod lootbox_program {
@@ -48,16 +48,16 @@ pub mod lootbox_program {
         )?;
 
         let available_songs: Vec<Pubkey> = vec![
-            "DkzCeL18MWEj2DwCDh1ADvNsNWaQoGdN6RuUBuDfj5Lk".parse::<Pubkey>().unwrap(),
-            "9yA5jq74AndzMEwtb8MTwqSNEusr8UvpLdgibn6oWVMb".parse::<Pubkey>().unwrap(),
-            "Be93M2xcuufkQXARFA9MFFs6mGJM7kbTk8XYmjWTAxyQ".parse::<Pubkey>().unwrap(),
-            "BZmay9FYzjfZj72SCbzLd7iqqdQagPMpeJjJABijr3Zf".parse::<Pubkey>().unwrap(),
-            "EEL1tJ9hkiNgoPyqfJsLsdC8BecNKTS6gRcz8TpbNW63".parse::<Pubkey>().unwrap(),
-            "C12KwzsCM6nGsvDws2YaFNNZoJwNcF5RxCfiJmEksfBb".parse::<Pubkey>().unwrap(),
-            "9wsRTk1LpzjhfTUD4prb59JTkWpfv73izpBH8HhzxaaU".parse::<Pubkey>().unwrap(),
-            "HJn7NzygVQGndVS8UwA5vQqB6bLp6mfb3QZ2QprLKxCZ".parse::<Pubkey>().unwrap(),
-            "CEoVWiTDiyLbzHT1VYterF1gBCj7PmvXUJbNRGCDB9hP".parse::<Pubkey>().unwrap(),
-            "C3EHqNfoUe3wArMCN7ER5yL6vBqNrWRGrZQ6FgGeFAaK".parse::<Pubkey>().unwrap(),
+            "9KsHKQZK1tg67DUBRzBTHMXHea93MoM9gw1VAzefMUaV".parse::<Pubkey>().unwrap(),
+            "5xNy3TDu4qye5QA2qkUdvhrodLmViN1cPMTYeB1YphYX".parse::<Pubkey>().unwrap(),
+            "E5uMyHVBKY48buPFVq6ScaWyycm4TcavzA2BfLCzEcqt".parse::<Pubkey>().unwrap(),
+            "6sS6NGmZwyYXYZBWJASJm5ZoXdr9wAeZJMTXaexRev48".parse::<Pubkey>().unwrap(),
+            "8i8ESTW6VEX5VyaLJt5Z96JMJWheLy7r3L4huwoBqvyS".parse::<Pubkey>().unwrap(),
+            "GnW3W1Yvd5Vyav4Y3cxnU8iuqz3XwCxYR7pjPtMN9AHJ".parse::<Pubkey>().unwrap(),
+            "JCDZUs81jBeM8phgnhbdFPpgPT4AD5LCiLDvE3GGqPvC".parse::<Pubkey>().unwrap(),
+            "gf77ttAUtwSPTrqbEqx8bchuEDMrJKhnXGi8oyCfzft".parse::<Pubkey>().unwrap(),
+            "AdMy5qDg26yLoZLRXbyoAq5HK8xGXMmCm5fNN9ErVyBH".parse::<Pubkey>().unwrap(),
+            "9T88FX7HymhwuDutMwpwVZSyoYEbnwvhYFGHaySg3b6X".parse::<Pubkey>().unwrap(),
         ];
 
         let clock = Clock::get()?;
@@ -123,7 +123,7 @@ pub struct OpenLootbox<'info> {
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
     #[account(mut)]                                                                                         // TEST
-    // #[account(mut, address="6YR1nuLqkk8VC1v42xJaPKvE9X9pnuqVAvthFUSDsMUL".parse::<Pubkey>().unwrap())]   // PROD
+    // #[account(mut, address="6nVX2aZbjeXKiu5zResyB2G8ZyfgoZM411B5jSBF7Azj".parse::<Pubkey>().unwrap())]   // PROD
     pub stake_mint: Account<'info, Mint>,
     #[account(
         mut,
@@ -172,6 +172,17 @@ pub struct RetrieveItem<'info> {
     pub system_program: Program<'info, System>,
     pub rent: Sysvar<'info, Rent>,
 }
+
+/* #[derive(Clone)]
+pub struct StakingProgram;
+
+impl anchor_lang::Id for StakingProgram {
+    fn id() -> Pubkey {
+        "6nVX2aZbjeXKiu5zResyB2G8ZyfgoZM411B5jSBF7Azj"
+            .parse::<Pubkey>()
+            .unwrap()
+    }
+} */
 
 #[error_code]
 enum LootboxError {

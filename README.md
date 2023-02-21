@@ -2,7 +2,19 @@
 
 Stake NFTs and win a token reward
 
-[See dapp](https://github.com/KevinFiorentino/pink-floyd-nft-collection)
+[See front-end](https://github.com/KevinFiorentino/pink-floyd-nft-collection)
+
+> Use at least NodeJS v16
+
+## Procedure to Deploy Programs and Prepare DApp
+
+> In `staking-program` there are two lines to change depending Test or Production: Find the comment: `CHANGE DEPENDING TEST OR PRODUCTION` before deploy program
+
+1. Prepare to deploy both programs (Don't deploy them yet)
+2. Go to [front-end repo](https://github.com/KevinFiorentino/pink-floyd-nft-collection) and set both program IDs in `src/utils/constanst.ts`
+3. In that repo, follow `README.md` to generate reward token PINK and SONG tokens
+4. The third step generated several public key for each token, replace them on `lootbox-program`
+5. Deploy both programs
 
 ### Deploy Staking Program
 
@@ -22,14 +34,10 @@ Stake NFTs and win a token reward
 
 ### Upgrade Programs
 
-- `anchor upgrade target/deploy/solana_nft_staking.so --provider.cluster devnet --program-id 8eFKYubnkNpv3V1xKSmgWVeQTCG96gYFw1AoMHk9axLh`
-- `anchor upgrade target/deploy/lootbox_program.so --provider.cluster devnet --program-id DR9bKxkN4A8AoCQfcBQ3Vz7mf8ireZ6JqWxSDfgmD72H`
+- `anchor upgrade target/deploy/solana_nft_staking.so --provider.cluster devnet --program-id XXXXX`
+- `anchor upgrade target/deploy/lootbox_program.so --provider.cluster devnet --program-id XXXXX`
 
-### Test Both Programs
-
-
-- Comment lines !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+### Test Programs
 
 - `nvm use 16`
 - `anchor test --skip-build --skip-deploy`
