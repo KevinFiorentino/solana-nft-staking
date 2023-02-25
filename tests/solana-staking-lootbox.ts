@@ -8,6 +8,9 @@ import { CreateNftOutput } from '@metaplex-foundation/js';
 import { setupNft } from './utils/setupNft';
 import { expect } from 'chai';
 import { BN } from '@project-serum/anchor'
+import { promiseWithTimeout, SwitchboardTestContext } from "@switchboard-xyz/sbv2-utils";
+import { setupSwitchboard } from "./utils/setupSwitchboard";
+import * as sbv2 from "@switchboard-xyz/switchboard-v2";
 
 describe('Solana NFT Staking && Lootbox', () => {
 
@@ -26,9 +29,20 @@ describe('Solana NFT Staking && Lootbox', () => {
   let mintAuth: anchor.web3.PublicKey
   let tokenAddress: anchor.web3.PublicKey
 
+  let switchboard: SwitchboardTestContext
+  let userState: anchor.web3.PublicKey
+  let lootboxPointerPda: anchor.web3.PublicKey
+  let permissionBump: number
+  let switchboardStateBump: number
+  let vrfAccount: sbv2.VrfAccount
+  let switchboardStateAccount: sbv2.ProgramStateAccount
+  let permissionAccount: sbv2.PermissionAccount
+
   before(async () => {
     ;({ nft, delegatedAuthPda, stakeStatePda, mint, mintAuth, tokenAddress } =
       await setupNft(stakingProgram, wallet.payer))
+    ;({ switchboard, lootboxPointerPda, permissionBump, switchboardStateBump, vrfAccount, switchboardStateAccount, permissionAccount } =
+      await setupSwitchboard(provider, lootboxProgram, wallet.payer))
   })
 
 
