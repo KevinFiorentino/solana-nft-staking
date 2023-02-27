@@ -3,7 +3,7 @@ use crate::*;
 #[derive(Accounts)]
 #[instruction(params: InitUserParams)]
 pub struct InitUser<'info> {
-  #[account(
+    #[account(
         init,
         // PRODUCTION
         /* seeds = [
@@ -18,14 +18,14 @@ pub struct InitUser<'info> {
         space = 8 + std::mem::size_of::<UserState>(),
         bump,
     )]
-  pub state: AccountLoader<'info, UserState>,
-  #[account(
+    pub state: AccountLoader<'info, UserState>,
+    #[account(
         constraint = vrf.load()?.authority == state.key() @ LootboxError::InvalidVrfAuthorityError
     )]
-  pub vrf: AccountLoader<'info, VrfAccountData>,
-  #[account(mut)]
-  pub payer: Signer<'info>,
-  pub system_program: Program<'info, System>,
+    pub vrf: AccountLoader<'info, VrfAccountData>,
+    #[account(mut)]
+    pub payer: Signer<'info>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Clone, AnchorSerialize, AnchorDeserialize)]

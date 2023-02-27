@@ -83,7 +83,6 @@ pub struct OpenLootbox<'info> {
         constraint = switchboard_program.executable == true
     )]
     pub switchboard_program: AccountInfo<'info>,
-
     // PAYER ACCOUNTS
     #[account(mut,
         constraint =
