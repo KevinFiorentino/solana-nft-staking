@@ -15,13 +15,13 @@ pub struct OpenLootbox<'info> {
     pub lootbox_pointer: Box<Account<'info, LootboxPointer>>,
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
-    // TESTING - Uncomment the next line during testing
-    // #[account(mut)]
-    // TESTING - Comment out the next three lines during testing
-    #[account(
-          mut,
-          address="D7F9JnGcjxQwz9zEQmasksX1VrwFcfRKu8Vdqrk2enHR".parse::<Pubkey>().unwrap()
-      )]
+    // TESTING
+    #[account(mut)]
+    // PRODUCTION
+    /* #[account(
+        mut,
+        address="D7F9JnGcjxQwz9zEQmasksX1VrwFcfRKu8Vdqrk2enHR".parse::<Pubkey>().unwrap()
+    )] */
     pub stake_mint: Account<'info, Mint>,
     #[account(
         mut,
@@ -36,20 +36,19 @@ pub struct OpenLootbox<'info> {
     pub stake_state: Box<Account<'info, UserStakeInfo>>,
     #[account(
         mut,
-        // TESTING - Comment out these seeds for testing
-        seeds = [
+        // PRODUCTION
+        /* seeds = [
             user.key().as_ref(),
+        ], */
+        // TESTING
+        seeds = [
+            vrf.key().as_ref(),
+            user.key().as_ref()
         ],
-        // TESTING - Uncomment these seeds for testing
-        // seeds = [
-        //     vrf.key().as_ref(),
-        //     user.key().as_ref()
-        // ],
         bump = state.load()?.bump,
         has_one = vrf @ LootboxError::InvalidVrfAccount
     )]
     pub state: AccountLoader<'info, UserState>,
-
     // SWITCHBOARD ACCOUNTS
     #[account(mut,
         has_one = escrow
@@ -98,7 +97,7 @@ pub struct OpenLootbox<'info> {
     pub recent_blockhashes: AccountInfo<'info>,
 }
 
-#[derive(Clone)]
+/* #[derive(Clone)]
 pub struct StakingProgram;
 
 impl anchor_lang::Id for StakingProgram {
@@ -107,7 +106,7 @@ impl anchor_lang::Id for StakingProgram {
             .parse::<Pubkey>()
             .unwrap()
     }
-}
+} */
 
 impl OpenLootbox<'_> {
     pub fn process_instruction(ctx: &mut Context<Self>, box_number: u64) -> Result<()> {
@@ -161,11 +160,13 @@ impl OpenLootbox<'_> {
         };
 
         let payer = ctx.accounts.user.key();
-        // TESTING - uncomment the following during tests
-        // let vrf = ctx.accounts.vrf.key();
-        // let state_seeds: &[&[&[u8]]] = &[&[vrf.as_ref(), payer.as_ref(), &[bump]]];
-        // TESTING - comment out the next line during tests
-        let state_seeds: &[&[&[u8]]] = &[&[payer.as_ref(), &[bump]]];
+
+        // TESTING
+        let vrf = ctx.accounts.vrf.key();
+        let state_seeds: &[&[&[u8]]] = &[&[vrf.as_ref(), payer.as_ref(), &[bump]]];
+
+        // PRODUCTION
+        // let state_seeds: &[&[&[u8]]] = &[&[payer.as_ref(), &[bump]]];
 
         msg!("requesting randomness");
         vrf_request_randomness.invoke_signed(

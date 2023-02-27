@@ -1,5 +1,3 @@
-
-
 use crate::*;
 
 #[derive(Accounts)]

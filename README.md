@@ -8,7 +8,7 @@ Stake NFTs and win a token reward
 
 ## Procedure to Deploy Programs and Prepare DApp
 
-> In `staking-program` there are two lines to change depending Test or Production: Find the comment: `CHANGE DEPENDING TEST OR PRODUCTION` before deploy program
+> In both programs, there are several lines to change depending Test or Production: Find the comment: `PRODUCTION` or `TESTING` to identify them
 
 1. Prepare to deploy both programs (Don't deploy them yet)
 2. Go to [front-end repo](https://github.com/KevinFiorentino/solana-staking-lootbox-ui) and set both program IDs in `src/utils/constanst.ts`

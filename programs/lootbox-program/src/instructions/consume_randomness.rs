@@ -1,5 +1,3 @@
-
-
 use crate::state::*;
 use crate::*;
 
@@ -7,15 +5,15 @@ use crate::*;
 pub struct ConsumeRandomness<'info> {
     #[account(
         mut,
-        // TESTING - Comment out these seeds for testing
-        seeds = [
+        // PRODUCTION
+        /* seeds = [
             payer.key().as_ref(),
+        ], */
+        // TESTING
+        seeds = [
+            vrf.key().as_ref(),
+            payer.key().as_ref()
         ],
-        // TESTING - Uncomment these seeds for testing
-        // seeds = [
-        //     vrf.key().as_ref(),
-        //     payer.key().as_ref()
-        // ],
         bump = state.load()?.bump,
         has_one = vrf @ LootboxError::InvalidVrfAccount
     )]
@@ -67,15 +65,15 @@ impl ConsumeRandomness<'_> {
     }
 
     const AVAILABLE_SONG: [&'static str; 10] = [
-        "9KsHKQZK1tg67DUBRzBTHMXHea93MoM9gw1VAzefMUaV",
-        "5xNy3TDu4qye5QA2qkUdvhrodLmViN1cPMTYeB1YphYX",
-        "E5uMyHVBKY48buPFVq6ScaWyycm4TcavzA2BfLCzEcqt",
-        "6sS6NGmZwyYXYZBWJASJm5ZoXdr9wAeZJMTXaexRev48",
-        "8i8ESTW6VEX5VyaLJt5Z96JMJWheLy7r3L4huwoBqvyS",
-        "GnW3W1Yvd5Vyav4Y3cxnU8iuqz3XwCxYR7pjPtMN9AHJ",
-        "JCDZUs81jBeM8phgnhbdFPpgPT4AD5LCiLDvE3GGqPvC",
-        "gf77ttAUtwSPTrqbEqx8bchuEDMrJKhnXGi8oyCfzft",
-        "AdMy5qDg26yLoZLRXbyoAq5HK8xGXMmCm5fNN9ErVyBH",
-        "9T88FX7HymhwuDutMwpwVZSyoYEbnwvhYFGHaySg3b6X",
+        "qX4nyer3pWH6GeJQs7BAhUGPR6dFyp6cKFWzPnRDMZJ",
+        "AWpvNodKYa4jFiJX59yr5P2VgfFkRGBpExZcmCpDvv6M",
+        "4MP6JePppK5dEYjzsACzi1dppKFizW7ti5z4KRSLsFuH",
+        "9Sb4FNAYBshL25Zn9gqgaKE4MZ2jDEMQKBWV5iS8KyjE",
+        "DxTjFAHkkwqFToD4EffGYaZSyj34YzMGSCrU2GrYEbzY",
+        "7sqrQAUfEFxauN16coMmR6PzLfD2ETZtSUgmtsvLPNJF",
+        "6QUM81ezHasqKu1SB6MRUY4Bus2mN2yxog6wJXURBbSC",
+        "Dk9W9vraksfJYKhk1j8TFJPkVw4fYVHmsHKKKc5c6wrr",
+        "BXa9V3j4Vr6AxJMK7WttmTRPGUNGdDjr5ukPtmVzUWZj",
+        "ApsMC2gD5BHu4qQVkenLBB8PnAjFMekg1wFLGhqgFQV4",
     ];
 }

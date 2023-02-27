@@ -99,23 +99,38 @@ describe('Solana NFT Staking && Lootbox', () => {
 
 
   /* ******************************
-           LOOTBOX PROGRAM
+          LOOTBOX PROGRAM V2
   ****************************** */
 
-  it('Chooses a mint pseudorandomly', async () => {
+  it("init user", async () => {
+    const tx = await lootboxProgram.methods
+      .initUser({
+        switchboardStateBump: switchboardStateBump,
+        vrfPermissionBump: permissionBump,
+      })
+      .accounts({
+        state: userState,
+        vrf: vrfAccount.publicKey,
+        payer: wallet.pubkey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .rpc()
+  })
+
+  it("Chooses a mint pseudorandomly", async () => {
     const mint = await createMint(
       provider.connection,
       wallet.payer,
       wallet.publicKey,
       wallet.publicKey,
       2
-    );
+    )
     const ata = await getOrCreateAssociatedTokenAccount(
       provider.connection,
       wallet.payer,
       mint,
       wallet.publicKey
-    );
+    )
 
     await mintToChecked(
       provider.connection,
@@ -125,46 +140,64 @@ describe('Solana NFT Staking && Lootbox', () => {
       wallet.payer,
       1000,
       2
-    );
+    )
 
     const [stakeAccount] = anchor.web3.PublicKey.findProgramAddressSync(
       [wallet.publicKey.toBuffer(), nft.tokenAddress.toBuffer()],
       stakingProgram.programId
-    );
+    )
+
+    const vrfState = await vrfAccount.loadData()
+    const { authority, dataBuffer } = await switchboard.queue.loadData()
 
     await lootboxProgram.methods
       .openLootbox(new BN(10))
       .accounts({
+        user: wallet.publicKey,
         stakeMint: mint,
         stakeMintAta: ata.address,
         stakeState: stakeAccount,
+        state: userState,
+        vrf: vrfAccount.publicKey,
+        oracleQueue: switchboard.queue.publicKey,
+        queueAuthority: authority,
+        dataBuffer: dataBuffer,
+        permission: permissionAccount.publicKey,
+        escrow: vrfState.escrow,
+        programState: switchboardStateAccount.publicKey,
+        switchboardProgram: switchboard.program.programId,
+        payerWallet: switchboard.payerTokenWallet,
+        recentBlockhashes: anchor.web3.SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
       })
-      .rpc();
+      .rpc()
 
-    const [address] = anchor.web3.PublicKey.findProgramAddressSync(
-      [Buffer.from('lootbox'), wallet.publicKey.toBuffer()],
-      lootboxProgram.programId
-    );
-    const pointer = await lootboxProgram.account.lootboxPointer.fetch(address);
-
-    expect(pointer.mint.toBase58());
+    await awaitCallback(
+      lootboxProgram,
+      lootboxPointerPda,
+      20_000,
+      "Didn't get random mint"
+    )
   })
 
-  it('Mints the selected song', async () => {
-
+  it("Mints the selected song", async () => {
     const [pointerAddress] = anchor.web3.PublicKey.findProgramAddressSync(
-      [Buffer.from('lootbox'), wallet.publicKey.toBuffer()],
+      [Buffer.from("lootbox"), wallet.publicKey.toBuffer()],
       lootboxProgram.programId
-    );
+    )
 
     const pointer = await lootboxProgram.account.lootboxPointer.fetch(
       pointerAddress
-    );
+    )
 
+    let previousSongCount = 0
     const songATA = await getAssociatedTokenAddress(
       pointer.mint,
       wallet.publicKey
-    );
+    )
+    try {
+      let songAccount = await getAccount(provider.connection, songATA)
+      previousSongCount = Number(songAccount.amount)
+    } catch (error) {}
 
     await lootboxProgram.methods
       .retrieveItemFromLootbox()
@@ -172,10 +205,133 @@ describe('Solana NFT Staking && Lootbox', () => {
         mint: pointer.mint,
         userSongAta: songATA,
       })
-      .rpc();
+      .rpc()
 
-    const songAccount = await getAccount(provider.connection, songATA);
-    expect(Number(songAccount.amount)).to.equal(1);
+    const songAccount = await getAccount(provider.connection, songATA)
+    expect(Number(songAccount.amount)).to.equal(previousSongCount + 1)
   })
 
 });
+
+async function awaitCallback(
+  program: Program<LootboxProgram>,
+  lootboxPointerAddress: anchor.web3.PublicKey,
+  timeoutInterval: number,
+  errorMsg = "Timed out waiting for VRF Client callback"
+) {
+  let ws: number | undefined = undefined
+  const result: boolean = await promiseWithTimeout(
+    timeoutInterval,
+    new Promise((resolve: (result: boolean) => void) => {
+      ws = program.provider.connection.onAccountChange(
+        lootboxPointerAddress,
+        async (
+          accountInfo: anchor.web3.AccountInfo<Buffer>,
+          context: anchor.web3.Context
+        ) => {
+          const lootboxPointer = await program.account.lootboxPointer.fetch(
+            lootboxPointerAddress
+          )
+
+          if (lootboxPointer.redeemable) {
+            resolve(true)
+          }
+        }
+      )
+    }).finally(async () => {
+      if (ws) {
+        await program.provider.connection.removeAccountChangeListener(ws)
+      }
+      ws = undefined
+    }),
+    new Error(errorMsg)
+  ).finally(async () => {
+    if (ws) {
+      await program.provider.connection.removeAccountChangeListener(ws)
+    }
+    ws = undefined
+  })
+
+  return result
+}
+
+
+/* ******************************
+        LOOTBOX PROGRAM V1
+****************************** */
+
+/* it('Chooses a mint pseudorandomly', async () => {
+  const mint = await createMint(
+    provider.connection,
+    wallet.payer,
+    wallet.publicKey,
+    wallet.publicKey,
+    2
+  );
+  const ata = await getOrCreateAssociatedTokenAccount(
+    provider.connection,
+    wallet.payer,
+    mint,
+    wallet.publicKey
+  );
+
+  await mintToChecked(
+    provider.connection,
+    wallet.payer,
+    mint,
+    ata.address,
+    wallet.payer,
+    1000,
+    2
+  );
+
+  const [stakeAccount] = anchor.web3.PublicKey.findProgramAddressSync(
+    [wallet.publicKey.toBuffer(), nft.tokenAddress.toBuffer()],
+    stakingProgram.programId
+  );
+
+  await lootboxProgram.methods
+    .openLootbox(new BN(10))
+    .accounts({
+      stakeMint: mint,
+      stakeMintAta: ata.address,
+      stakeState: stakeAccount,
+    })
+    .rpc();
+
+  const [address] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('lootbox'), wallet.publicKey.toBuffer()],
+    lootboxProgram.programId
+  );
+  const pointer = await lootboxProgram.account.lootboxPointer.fetch(address);
+
+  expect(pointer.mint.toBase58());
+})
+
+it('Mints the selected song', async () => {
+
+  const [pointerAddress] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('lootbox'), wallet.publicKey.toBuffer()],
+    lootboxProgram.programId
+  );
+
+  const pointer = await lootboxProgram.account.lootboxPointer.fetch(
+    pointerAddress
+  );
+
+  const songATA = await getAssociatedTokenAddress(
+    pointer.mint,
+    wallet.publicKey
+  );
+
+  await lootboxProgram.methods
+    .retrieveItemFromLootbox()
+    .accounts({
+      mint: pointer.mint,
+      userSongAta: songATA,
+    })
+    .rpc();
+
+  const songAccount = await getAccount(provider.connection, songATA);
+  expect(Number(songAccount.amount)).to.equal(1);
+}) */
