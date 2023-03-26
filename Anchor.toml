@@ -3,8 +3,8 @@ seeds = true
 skip-lint = false
 
 [programs.devnet]
-lootbox_program = "4JsjY8YN4d1g3s823x1MUfgYWxFsK9CCu4sHms7SELDp"
-solana_nft_staking = "8WUdyHRWLnfWCYuukaPJ5Hd1PmyCoN4yEY4zBcBTiQz6"
+lootbox_program = "CFXdF9Dk9AMWheuqCgaRWZzokNuwjp6ktpZ1X4BJ2BJh"
+solana_nft_staking = "Aa1aRbhVaGMKJG6k17H5UwtneQtJwCWKZ3vLVRsWZNCN"
 
 [registry]
 url = "https://api.apr.dev"

@@ -65,15 +65,15 @@ impl ConsumeRandomness<'_> {
     }
 
     const AVAILABLE_SONG: [&'static str; 10] = [
-        "qX4nyer3pWH6GeJQs7BAhUGPR6dFyp6cKFWzPnRDMZJ",
-        "AWpvNodKYa4jFiJX59yr5P2VgfFkRGBpExZcmCpDvv6M",
-        "4MP6JePppK5dEYjzsACzi1dppKFizW7ti5z4KRSLsFuH",
-        "9Sb4FNAYBshL25Zn9gqgaKE4MZ2jDEMQKBWV5iS8KyjE",
-        "DxTjFAHkkwqFToD4EffGYaZSyj34YzMGSCrU2GrYEbzY",
-        "7sqrQAUfEFxauN16coMmR6PzLfD2ETZtSUgmtsvLPNJF",
-        "6QUM81ezHasqKu1SB6MRUY4Bus2mN2yxog6wJXURBbSC",
-        "Dk9W9vraksfJYKhk1j8TFJPkVw4fYVHmsHKKKc5c6wrr",
-        "BXa9V3j4Vr6AxJMK7WttmTRPGUNGdDjr5ukPtmVzUWZj",
-        "ApsMC2gD5BHu4qQVkenLBB8PnAjFMekg1wFLGhqgFQV4",
+        "EKZAwmvmWRTBqMZ3PpGQUfw7ZiDzpWgTfYQAwskuo9ez",
+        "7AxUAnPk3VmQ1Gp46EcY8ScqGgR5SwididM6sWfZuhuy",
+        "C1b3NcZRdwqNrKUH8HFCdgZTdyMY2hmqCAwpwdoJ1Xn2",
+        "PN6LobK3kgxcpq6f1AVRCuN6tjVbn2rb1iBnqS14L21",
+        "4zJ6HPtkhT2guMq6TLFVK3BwPQFdZ1ZKfrZZMNemE69Z",
+        "BzoVWKFBP3HQRaXxmJM5jLyVQEEzQLdtrDXDqn1R4ytC",
+        "7KLa55BQXE4bjbK77SrZKQmBTKKzeps5aDY9AoBY7acD",
+        "GsXGYX8WNQoDRSBKBG2VNzZmVenV4bkD4gksMkPBsRLZ",
+        "8QBHuqvhmQAzQNT39QGUGeT65f5CQnKxJyRsPYAf4BeR",
+        "FpstSSBDYNKcRMqxMPyvz5A6xFNiQKazxwxLzhEFFYYh",
     ];
 }

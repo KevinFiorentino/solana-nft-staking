@@ -10,7 +10,7 @@ use mpl_token_metadata::{
     ID as MetadataTokenId,
 };
 
-declare_id!("8WUdyHRWLnfWCYuukaPJ5Hd1PmyCoN4yEY4zBcBTiQz6");
+declare_id!("Aa1aRbhVaGMKJG6k17H5UwtneQtJwCWKZ3vLVRsWZNCN");
 
 #[program]
 pub mod solana_nft_staking {

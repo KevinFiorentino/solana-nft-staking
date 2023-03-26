@@ -13,7 +13,7 @@ Stake NFTs and win a token reward
 1. Prepare to deploy both programs (Don't deploy them yet)
 2. Go to [front-end repo](https://github.com/KevinFiorentino/solana-staking-lootbox-ui) and set both program IDs in `src/utils/constanst.ts`
 3. In that repo, follow `README.md` to generate reward token PINK and SONG tokens
-4. The third step generated several public key for each token, replace them on `lootbox-program`
+4. The third step generated several public key for each token song, replace them on `lootbox-program`
 5. Deploy both programs
 
 ### Deploy Staking Program
