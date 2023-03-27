@@ -16,14 +16,6 @@ Stake NFTs and win a token reward
 4. The third step generated several public key for each token song, replace them on `lootbox-program`
 5. Deploy both programs
 
-### Deploy Staking Program
-
-- `anchor build`
-- `solana address -k target/deploy/solana_nft_staking-keypair.json`
-- Replace Program ID in `lib.rs` and `Anchor.toml`
-- `anchor build` (again)
-- `anchor deploy -p solana-nft-staking`
-
 ### Deploy Lootbox Program
 
 - `anchor build`
@@ -31,6 +23,14 @@ Stake NFTs and win a token reward
 - Replace Program ID in `lib.rs` and `Anchor.toml`
 - `anchor build` (again)
 - `anchor deploy -p lootbox-program`
+
+### Deploy Staking Program
+
+- `anchor build`
+- `solana address -k target/deploy/solana_nft_staking-keypair.json`
+- Replace Program ID in `lib.rs` and `Anchor.toml`
+- `anchor build` (again)
+- `anchor deploy -p solana-nft-staking`
 
 ### Upgrade Programs
 

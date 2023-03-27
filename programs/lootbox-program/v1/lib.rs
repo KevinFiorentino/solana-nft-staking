@@ -6,7 +6,7 @@ use anchor_spl::{
     token::{Burn, Mint, MintTo, Token, TokenAccount},
 };
 
-declare_id!("B8t7TWYR8y8vXheSXw1LQaynip1JiXBxwRoSJrTzvX7c");
+declare_id!("RANxjqM6cEzGSCuR2tNaAFB4WxRxyNfvPvUNiH7372y");
 
 #[program]
 pub mod lootbox_program {
@@ -48,16 +48,16 @@ pub mod lootbox_program {
         )?;
 
         let available_songs: Vec<Pubkey> = vec![
-            "9KsHKQZK1tg67DUBRzBTHMXHea93MoM9gw1VAzefMUaV".parse::<Pubkey>().unwrap(),
-            "5xNy3TDu4qye5QA2qkUdvhrodLmViN1cPMTYeB1YphYX".parse::<Pubkey>().unwrap(),
-            "E5uMyHVBKY48buPFVq6ScaWyycm4TcavzA2BfLCzEcqt".parse::<Pubkey>().unwrap(),
-            "6sS6NGmZwyYXYZBWJASJm5ZoXdr9wAeZJMTXaexRev48".parse::<Pubkey>().unwrap(),
-            "8i8ESTW6VEX5VyaLJt5Z96JMJWheLy7r3L4huwoBqvyS".parse::<Pubkey>().unwrap(),
-            "GnW3W1Yvd5Vyav4Y3cxnU8iuqz3XwCxYR7pjPtMN9AHJ".parse::<Pubkey>().unwrap(),
-            "JCDZUs81jBeM8phgnhbdFPpgPT4AD5LCiLDvE3GGqPvC".parse::<Pubkey>().unwrap(),
-            "gf77ttAUtwSPTrqbEqx8bchuEDMrJKhnXGi8oyCfzft".parse::<Pubkey>().unwrap(),
-            "AdMy5qDg26yLoZLRXbyoAq5HK8xGXMmCm5fNN9ErVyBH".parse::<Pubkey>().unwrap(),
-            "9T88FX7HymhwuDutMwpwVZSyoYEbnwvhYFGHaySg3b6X".parse::<Pubkey>().unwrap(),
+            "91ukLnTQFNh8VViWoZzipmrfhN16b9GnkpdexNAwZ9GY".parse::<Pubkey>().unwrap(),
+            "5zJYrg3aML7cdzoAyYLtCJ3RDiTskpfWUeBGPbG1qgYU".parse::<Pubkey>().unwrap(),
+            "FxLdkLw4isnNhiGkLzQhVY5UpZVd5F8fzmGGwh1Lk2pL".parse::<Pubkey>().unwrap(),
+            "8LC2EziumvS15cjDRLa2WaYCWSyMQAdf4z25NvFYJcGg".parse::<Pubkey>().unwrap(),
+            "7HQKxeAo6Z9Ap3XGP8TesxVY5F9xwLKdpN74sAd3PkFa".parse::<Pubkey>().unwrap(),
+            "91ukLnTQFNh8VViWoZzipmrfhN16b9GnkpdexNAwZ9GY".parse::<Pubkey>().unwrap(),
+            "5zJYrg3aML7cdzoAyYLtCJ3RDiTskpfWUeBGPbG1qgYU".parse::<Pubkey>().unwrap(),
+            "FxLdkLw4isnNhiGkLzQhVY5UpZVd5F8fzmGGwh1Lk2pL".parse::<Pubkey>().unwrap(),
+            "8LC2EziumvS15cjDRLa2WaYCWSyMQAdf4z25NvFYJcGg".parse::<Pubkey>().unwrap(),
+            "7HQKxeAo6Z9Ap3XGP8TesxVY5F9xwLKdpN74sAd3PkFa".parse::<Pubkey>().unwrap(),
         ];
 
         let clock = Clock::get()?;

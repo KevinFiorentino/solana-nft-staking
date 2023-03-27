@@ -65,15 +65,15 @@ impl ConsumeRandomness<'_> {
     }
 
     const AVAILABLE_SONG: [&'static str; 10] = [
-        "EKZAwmvmWRTBqMZ3PpGQUfw7ZiDzpWgTfYQAwskuo9ez",
-        "7AxUAnPk3VmQ1Gp46EcY8ScqGgR5SwididM6sWfZuhuy",
-        "C1b3NcZRdwqNrKUH8HFCdgZTdyMY2hmqCAwpwdoJ1Xn2",
-        "PN6LobK3kgxcpq6f1AVRCuN6tjVbn2rb1iBnqS14L21",
-        "4zJ6HPtkhT2guMq6TLFVK3BwPQFdZ1ZKfrZZMNemE69Z",
-        "BzoVWKFBP3HQRaXxmJM5jLyVQEEzQLdtrDXDqn1R4ytC",
-        "7KLa55BQXE4bjbK77SrZKQmBTKKzeps5aDY9AoBY7acD",
-        "GsXGYX8WNQoDRSBKBG2VNzZmVenV4bkD4gksMkPBsRLZ",
-        "8QBHuqvhmQAzQNT39QGUGeT65f5CQnKxJyRsPYAf4BeR",
-        "FpstSSBDYNKcRMqxMPyvz5A6xFNiQKazxwxLzhEFFYYh",
+        "91ukLnTQFNh8VViWoZzipmrfhN16b9GnkpdexNAwZ9GY",
+        "5zJYrg3aML7cdzoAyYLtCJ3RDiTskpfWUeBGPbG1qgYU",
+        "FxLdkLw4isnNhiGkLzQhVY5UpZVd5F8fzmGGwh1Lk2pL",
+        "8LC2EziumvS15cjDRLa2WaYCWSyMQAdf4z25NvFYJcGg",
+        "7HQKxeAo6Z9Ap3XGP8TesxVY5F9xwLKdpN74sAd3PkFa",
+        "91ukLnTQFNh8VViWoZzipmrfhN16b9GnkpdexNAwZ9GY",
+        "5zJYrg3aML7cdzoAyYLtCJ3RDiTskpfWUeBGPbG1qgYU",
+        "FxLdkLw4isnNhiGkLzQhVY5UpZVd5F8fzmGGwh1Lk2pL",
+        "8LC2EziumvS15cjDRLa2WaYCWSyMQAdf4z25NvFYJcGg",
+        "7HQKxeAo6Z9Ap3XGP8TesxVY5F9xwLKdpN74sAd3PkFa",
     ];
 }
